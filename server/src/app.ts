@@ -9,7 +9,7 @@ import cors from "cors";
 const PORT = 3001;
 const TIMEOUT = 10000;
 const EVENT_GetData = "getData";
-const LIMIT_ASSETS = 1000;
+const LIMIT_ASSETS = 30;
 const app = require("express")();
 app.use(cors());
 const server = require("http").createServer(app);

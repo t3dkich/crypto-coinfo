@@ -1,46 +1,69 @@
-// rank: "1"
-// name: "Bitcoin"
-// priceUsd: "16913.3757279158525175"
-// marketCapUsd: "313500294417.5133763050312525"
-// vwap24Hr: "17021.3725171738134742"
-// maxSupply: "21000000.0000000000000000"
-// volumeUsd24Hr: "12361211306.4722896232531540"
-//   changePercent24Hr: "-2.2339692684575355"
-// id: "bitcoin"
-// supply: "18535643.0000000000000000"
-// symbol: "BTC"
 import numeral from "numeral";
+const {
+  rank,
+  priceUsd,
+  marketCapUsd,
+  vwap24Hr,
+  maxSupply,
+  volumeUsd24Hr,
+  changePercent24Hr,
+} = {
+  rank: "rank",
+  name: "name",
+  priceUsd: "priceUsd",
+  marketCapUsd: "marketCapUsd",
+  vwap24Hr: "vwap24Hr",
+  maxSupply: "maxSupply",
+  volumeUsd24Hr: "volumeUsd24Hr",
+  changePercent24Hr: "changePercent24Hr",
+  id: "id",
+  supply: "supply",
+  symbol: "symbol",
+};
 const formatCoinInfo = (coinsInfo) => {
   if (!coinsInfo) return;
   let val;
   coinsInfo.forEach((coin) => {
     for (const key in coin) {
-      if (key === "rank") continue;
+      if (key === rank) continue;
       val = coin[key];
-      coin[key] = format(val);
+      coin[key] = format(val, key);
     }
   });
   return coinsInfo;
 };
 
-const format = (val) => {
-  return !isNaN(+val) ? formatIner(val) : val;
+const format = (val, key) => {
+  return !isNaN(+val) ? formatIner(val, key) : val;
 };
 
-const formatIner = (numberTxt) => {
+const formatIner = (numberTxt, key) => {
   let number = +numberTxt;
-  let string;
-  //   console.log("formatInner");
-  if (number < 1 && number > -1) {
-    number = numeral(number);
-    string = number.format("0.00000000");
-    // console.log(string);
-    return string;
+  let final;
+  let format;
+  if (
+    key === priceUsd ||
+    key === marketCapUsd ||
+    key === vwap24Hr ||
+    key === maxSupply ||
+    key === volumeUsd24Hr
+  ) {
+    format = "$";
+  } else if (key === changePercent24Hr) {
+    format = "0,0.00";
+    final = numeral(number).format(format);
+    return final.concat("%");
   }
-  //   console.log(number);
-  if (number % 10 === 0) return numeral(number).format("0");
-  string = numeral(number).format("0.00");
-  return string;
+  if (number < 1 && number > -1) {
+    format += "0,0.00000000";
+  } else if (number % 10 === 0) {
+    format += "0,0";
+  } else {
+    format += "0,0.00";
+  }
+  final = numeral(number).format(format);
+  // console.log(format);
+  return final;
 };
 
 export default formatCoinInfo;

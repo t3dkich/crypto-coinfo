@@ -1,3 +1,26 @@
 table {
+  border-collapse: collapse;
   width: 100%;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 15px -3px !important;
+  border-radius: 0.5em;
+}
+tr {
+  height: 3.2em;
+  border-bottom: 1px solid #d4d4d5;
+}
+tr:hover {
+  background-color: #d4d4d5;
+}
+.pagination {
+  margin-top: 1.5em;
+}
+.padLR {
+  padding: 0 0.5em;
+}
+.left-align {
+  text-align: left;
+}
+.right-align {
+  text-align: right;
 }

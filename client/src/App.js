@@ -6,22 +6,7 @@ import formatCoinInfo from "./utils/formater";
 
 const App = () => {
   let info = useGetData();
-
   const data = useMemo(() => formatCoinInfo(info.data), [info]);
-
-  console.log(info.data);
-  console.log(info.data);console.log(info.data);
-  // rank: "1"
-  // name: "Bitcoin"
-  // priceUsd: "16913.3757279158525175"
-  // marketCapUsd: "313500294417.5133763050312525"
-  // vwap24Hr: "17021.3725171738134742"
-  // maxSupply: "21000000.0000000000000000"
-  // volumeUsd24Hr: "12361211306.4722896232531540"
-  //   changePercent24Hr: "-2.2339692684575355"
-  // id: "bitcoin"
-  // supply: "18535643.0000000000000000"
-  // symbol: "BTC"
   const columns = useMemo(() => [
     {
       Header: "Rank",
@@ -44,7 +29,7 @@ const App = () => {
       accessor: "vwap24Hr",
     },
     {
-      Header: "VWAP (24Hr)",
+      Header: "Supply",
       accessor: "maxSupply",
     },
     {
@@ -59,7 +44,6 @@ const App = () => {
 
   return (
     <div className="App">
-      {console.log(data)}
       {data ? <Table columns={columns} data={data} /> : null}
     </div>
   );

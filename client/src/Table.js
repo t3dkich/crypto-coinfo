@@ -2,14 +2,19 @@ import { useEffect } from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 import "./Table.css";
 
-let currentPage = 0;
 export const Table = ({ columns, data }) => {
   // Use the state and functions returned from useTable to build your UI
   useEffect(() => {
-    return () => {
-      currentPage = pageIndex;
-    };
-  });
+    setPageSize(15);
+  }, []);
+  const alignSide = (i) => {
+    return i === 1
+      ? "padLR left-align"
+      : i === 0
+      ? "padLR"
+      : "padLR right-align";
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -32,12 +37,13 @@ export const Table = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageIndex: currentPage },
+      initialState: { pageIndex: 0 },
+      autoResetPage: false,
+      // useControlledState: false,
     },
     useSortBy,
     usePagination
   );
-
   // Render the UI for your table
   return (
     <div>
@@ -45,10 +51,13 @@ export const Table = ({ columns, data }) => {
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((column, i) => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  className={alignSide(i)}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
                   {column.render("Header")}
                   {/* Add a sort direction indicator */}
                   <span>
@@ -68,9 +77,11 @@ export const Table = ({ columns, data }) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+                {row.cells.map((cell, i) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td className={alignSide(i)} {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </td>
                   );
                 })}
               </tr>
@@ -113,18 +124,6 @@ export const Table = ({ columns, data }) => {
             style={{ width: "100px" }}
           />
         </span>{" "}
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
       </div>
     </div>
   );
