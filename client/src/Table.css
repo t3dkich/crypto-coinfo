@@ -4,6 +4,7 @@ table {
   border: none;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 15px -3px !important;
   border-radius: 0.5em;
+  background-color: white;
 }
 tr {
   height: 3.2em;
