@@ -7,6 +7,12 @@ import formatCoinInfo from "./utils/formater";
 const App = () => {
   let info = useGetData();
   const data = useMemo(() => formatCoinInfo(info.data), [info]);
+<<<<<<< Updated upstream
+=======
+
+  console.log(info.data);
+
+>>>>>>> Stashed changes
   const columns = useMemo(() => [
     {
       Header: "Rank",
