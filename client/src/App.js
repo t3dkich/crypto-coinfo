@@ -10,6 +10,7 @@ const App = () => {
   const data = useMemo(() => formatCoinInfo(info.data), [info]);
 
   console.log(info.data);
+  console.log(info.data);console.log(info.data);
   // rank: "1"
   // name: "Bitcoin"
   // priceUsd: "16913.3757279158525175"
