@@ -25,3 +25,33 @@ tr:hover {
 .right-align {
   text-align: right;
 }
+@keyframes prUp {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: rgba(95, 248, 95, 0.466);
+  }
+  100% {
+    background-color: white;
+  }
+}
+@keyframes prDown {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: rgba(250, 69, 69, 0.5);
+  }
+  100% {
+    background-color: white;
+  }
+}
+.price-up {
+  animation-name: prUp;
+  animation-duration: 3s;
+}
+.price-down {
+  animation-name: prDown;
+  animation-duration: 3s;
+}

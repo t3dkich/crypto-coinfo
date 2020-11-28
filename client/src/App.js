@@ -1,12 +1,14 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import { useGetData } from "./hooks/useGetData";
 import { Table } from "./Table";
 import formatCoinInfo from "./utils/formater";
+import { PrevInfoContext } from "./AppContext";
 
 const App = () => {
   let info = useGetData();
   const data = useMemo(() => formatCoinInfo(info.data), [info]);
+  const [prevInfo, setPrevInfo] = useState({});
   const columns = useMemo(() => [
     {
       Header: "Rank",
@@ -44,7 +46,9 @@ const App = () => {
 
   return (
     <div className="App">
-      {data ? <Table columns={columns} data={data} /> : null}
+      <PrevInfoContext.Provider value={[prevInfo, setPrevInfo]}>
+        {data ? <Table columns={columns} data={data} /> : null}
+      </PrevInfoContext.Provider>
     </div>
   );
 };

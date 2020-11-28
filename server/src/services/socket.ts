@@ -15,16 +15,15 @@ export default (socket: Socket, getCoinsInfo: Function, setts: any) => {
     if (interval) {
       clearInterval(interval);
     }
-    setTimeout(() => {
-      emitData(socket, getCoinsInfo, setts);
-      interval = setInterval(
-        () => emitData(socket, getCoinsInfo, setts),
-        setts.server.TIMEOUT
-      );
-      socket.on("disconnect", () => {
-        console.log("Client disconnected");
-        clearInterval(interval);
-      });
-    }, 200);
+
+    emitData(socket, getCoinsInfo, setts);
+    interval = setInterval(
+      () => emitData(socket, getCoinsInfo, setts),
+      setts.server.TIMEOUT
+    );
+    socket.on("disconnect", () => {
+      console.log("Client disconnected");
+      clearInterval(interval);
+    });
   });
 };
