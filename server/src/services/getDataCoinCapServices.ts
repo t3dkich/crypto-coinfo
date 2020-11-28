@@ -21,7 +21,6 @@ const fetcher = async (...parts: string[]): Promise<Object> => {
   });
 
   if (response.status !== 200) {
-    console.log(response.statusText);
     return response.statusText;
   }
 

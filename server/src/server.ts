@@ -22,7 +22,7 @@ export default (setts: any) => {
 
   server.listen(setts.server.PORT, () => {
     console.log("Node Server on port " + setts.server.PORT);
-    dbConnection();
+    dbConnection(setts);
     init(setts, delCoinsInfo, addCoinsInfo);
     setInterval(() => {
       getNewCoinsInfo(setts, updateCoinsInfo);

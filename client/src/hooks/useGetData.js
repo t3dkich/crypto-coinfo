@@ -18,6 +18,5 @@ export const useGetData = () => {
       socketRef.current.disconnect();
     };
   }, []);
-  // console.log(coinsInfo);
   return coinsInfo;
 };

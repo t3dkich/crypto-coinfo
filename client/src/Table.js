@@ -4,36 +4,30 @@ import { PrevInfoContext } from "./AppContext";
 import "./Table.css";
 import numeral from "numeral";
 
-const isEmptyObj = (obj) => {
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      return false;
-    }
-  }
-  return JSON.stringify(obj) === JSON.stringify({});
-};
 export const Table = ({ columns, data }) => {
   // Use the state and functions returned from useTable to build your UI
-  // const [currInfo, setCurrInfo] = useState({});
   const [prevInfo, setPrevInfo] = useState({});
   const [prevInfoCtx, setPrevInfoCtx] = useContext(PrevInfoContext);
-
+  const isEmptyObj = (obj) => {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+    return JSON.stringify(obj) === JSON.stringify({});
+  };
   useEffect(() => {
     setPageSize(15);
   }, []);
 
   useEffect(() => {
     if (!isEmptyObj(prevInfoCtx)) {
-      // console.log("setPrevInfo");
-      // console.log(prevInfoCtx);
       setPrevInfo(prevInfoCtx);
     }
-    // console.log("inUseEffect");
     let curr = {};
     data.forEach(({ id, priceUsd }) => {
       curr[id] = numeral(priceUsd);
     });
-    // console.log("setPrevInfoCtx");
     setPrevInfoCtx(curr);
   }, [data]);
 
@@ -69,23 +63,14 @@ export const Table = ({ columns, data }) => {
       data,
       initialState: { pageIndex: 0 },
       autoResetPage: false,
-      // useControlledState: false,
     },
     useSortBy,
     usePagination
   );
   const addClass = (key, val) => {
-    // console.log("prevInfo->", prevInfo["bitcoin"]);
-    // console.log(key);
-    // if (!prevInfo || !currInfo) return;
-    // console.log("prevInfo -> ", prevInfo[key]);
-    // console.log("currInfo -> ", currInfo[key]);
-    // if (prevInfo[key]._value) return "";
     if (!isEmptyObj(prevInfo)) {
       let prevPrice = prevInfo[key]._value;
       let curPrice = numeral(val)._value;
-      // console.log(prevPrice, curPrice);
-
       if (prevPrice < curPrice) {
         return "price-down";
       } else if (prevPrice > curPrice) {
@@ -93,10 +78,8 @@ export const Table = ({ columns, data }) => {
       } else {
         return "";
       }
-      // if (prevInfo[key] === 'bitcoi')
     }
   };
-  // Render the UI for your table
   return (
     <div>
       <table {...getTableProps()}>
@@ -127,21 +110,12 @@ export const Table = ({ columns, data }) => {
         <tbody {...getTableBodyProps()}>
           {page.map((row, i) => {
             prepareRow(row);
-            let val = row.original.priceUsd;
-            let key = row.original.id;
-            // console.log("prevInfo->", prevInfo["bitcoin"]);
-            // console.log("currentInfo", data[0].priceUsd);
-
-            // if (!isEmptyObj(prevInfo)) {
-            //   console.log(prevInfo[key]);
-
-            // }
-            // console.log(prevInfo);
-            // console.log(data);
-            // currInfo[key] = numeral(val);
             return (
               // className={addClass(key, val)}
-              <tr className={addClass(key, val)} {...row.getRowProps()}>
+              <tr
+                className={addClass(row.original.id, row.original.priceUsd)}
+                {...row.getRowProps()}
+              >
                 {row.cells.map((cell, i) => {
                   return (
                     <td className={alignSide(i)} {...cell.getCellProps()}>
@@ -152,7 +126,6 @@ export const Table = ({ columns, data }) => {
               </tr>
             );
           })}
-          {/* {(prevInfo = currInfo)} */}
         </tbody>
       </table>
       {/* 

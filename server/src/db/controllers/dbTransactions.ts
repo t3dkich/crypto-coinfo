@@ -1,6 +1,6 @@
 import { CoinInfoResponseObject } from "../../interfaces/CoinInfoResponseObject";
 import CoinsInfoObjectSchema from "../models/CoinsInfoObjectModel";
-import { Error, Model } from "mongoose";
+import { Error } from "mongoose";
 
 let id: any = null;
 

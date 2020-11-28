@@ -2,7 +2,6 @@ import { Socket } from "socket.io";
 
 const emitData = async (socket: Socket, getCoinsInfo: Function, setts: any) => {
   console.log("emitDAta -> IN");
-
   let info = await getCoinsInfo();
   socket.emit(setts.socket.EVENT.getData, info);
 };

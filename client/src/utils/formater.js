@@ -62,7 +62,6 @@ const formatIner = (numberTxt, key) => {
     format += "0,0.00";
   }
   final = numeral(number).format(format);
-  // console.log(format);
   return final;
 };
 
