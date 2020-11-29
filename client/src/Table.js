@@ -29,6 +29,7 @@ export const Table = ({ columns, data }) => {
       curr[id] = numeral(priceUsd);
     });
     setPrevInfoCtx(curr);
+    console.log(data);
   }, [data]);
 
   const alignSide = (i) => {
@@ -71,9 +72,9 @@ export const Table = ({ columns, data }) => {
     if (!isEmptyObj(prevInfo)) {
       let prevPrice = prevInfo[key]._value;
       let curPrice = numeral(val)._value;
-      if (prevPrice < curPrice) {
+      if (prevPrice > curPrice) {
         return "price-down";
-      } else if (prevPrice > curPrice) {
+      } else if (prevPrice < curPrice) {
         return "price-up";
       } else {
         return "";

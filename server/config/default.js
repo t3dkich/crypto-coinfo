@@ -7,7 +7,7 @@ module.exports = {
     TIMEOUT: 5 * 1000, //seconds
   },
   apiCoinCap: {
-    LIMIT_ASSETS: 30,
+    LIMIT_ASSETS: 100,
   },
   socket: {
     EVENT: {
